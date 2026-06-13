@@ -27,9 +27,10 @@
             overflow-x: hidden;
         }
 
+        /* увеличен верхний отступ с 40px до 60px */
         .page {
             display: none;
-            padding: 40px 16px 20px 16px;
+            padding: 60px 16px 20px 16px;
             animation: fadeIn 0.2s ease;
             overflow-y: auto;
             max-height: calc(100vh - 70px);
@@ -139,9 +140,20 @@
             cursor: pointer;
             color: #9aa7b7;
         }
-        .nav-item.active { background: rgba(60,70,90,0.6); color: #ffffff; }
-        .nav-icon { font-size: 20px; font-family: monospace; }
-        .nav-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-item.active {
+            background: rgba(60,70,90,0.6);
+            color: #ffffff;
+        }
+        .nav-icon {
+            font-size: 20px;
+            font-family: monospace;
+        }
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         .pill-button {
             background: #1f232c;
@@ -294,18 +306,21 @@
 </head>
 <body>
 
+    <!-- ГЛАВНАЯ -->
     <div id="homePage" class="page active">
         <div class="typewriter-container"><div class="typewriter-text" id="typewriterText"></div></div>
         <div class="carousel-container" id="carouselContainer"><div class="carousel-track" id="carouselTrack"></div><div class="carousel-dots" id="carouselDots"></div></div>
         <div class="card"><div class="card-title">Новости крипторынка   ⟡   13 июня 2026</div><div class="news-list" id="newsContainer"></div></div>
     </div>
 
+    <!-- ГРАФИК -->
     <div id="chartPage" class="page">
         <div class="card"><div class="card-title">BTC/USDT График</div><canvas id="priceChart" width="600" height="240"></canvas><div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-top:8px;"><span>Макс: 92,400</span><span>Мин: 90,200</span><span>Объём: 2.4B</span></div></div>
         <div class="card"><div class="card-title">Стакан</div><div style="display:flex; gap:12px;"><div style="flex:1"><div class="orderbook-row"><span>Продажа</span><span>Цена</span><span>Кол-во</span></div><div id="askOrders"></div></div><div style="flex:1"><div class="orderbook-row"><span>Покупка</span><span>Цена</span><span>Кол-во</span></div><div id="bidOrders"></div></div></div></div>
         <div class="card"><div class="trade-type"><div class="trade-btn-sm active">Лимит</div><div class="trade-btn-sm">Маркет</div><div class="trade-btn-sm">Стоп</div></div><input class="modal-input" style="margin-bottom:8px;" placeholder="Цена USDT"><input class="modal-input" placeholder="Количество BTC"><div class="two-buttons"><div class="action-btn buy">Открыть</div><div class="action-btn sell">Закрыть</div></div></div>
     </div>
 
+    <!-- P2P -->
     <div id="p2pPage" class="page">
         <div class="card">
             <div class="card-title">P2P торговля</div>
@@ -316,6 +331,7 @@
         </div>
     </div>
 
+    <!-- КОШЕЛЁК -->
     <div id="walletPage" class="page">
         <div class="card">
             <div class="card-title">Баланс</div>
@@ -330,6 +346,7 @@
         </div>
     </div>
 
+    <!-- ПРОФИЛЬ -->
     <div id="profilePage" class="page">
         <div class="card">
             <div class="card-title">Профиль</div>
@@ -348,16 +365,18 @@
         </div>
     </div>
 
-    <!-- Модалки -->
+    <!-- Модалки для профиля -->
     <div id="kycModal" class="modal"><div class="modal-content"><h3>◈ KYC верификация</h3><input class="modal-input" placeholder="Полное имя"><input class="modal-input" placeholder="Паспорт / ID"><div class="modal-btn" id="submitKycBtn">Отправить на проверку</div><div class="modal-btn" style="background:#2a2f3a; margin-top:8px;" id="closeKycModal">Отмена</div></div></div>
-    <div id="twofaModal" class="modal"><div class="modal-content"><h3>⌘ Включить 2FA</h3><p style="font-size:0.8rem;">Код из Google Authenticator</p><input class="modal-input" id="twofaCode" placeholder="6-значный код"><div class="modal-btn" id="enableTwofaBtn">Активировать</div><div class="modal-btn" style="background:#2a2f3a;" id="closeTwofaModal">Отмена</div></div></div>
-    <div id="apiModal" class="modal"><div class="modal-content"><h3>⌨ API-ключи</h3><div id="apiKeysList" style="margin:12px 0; text-align:left;">Нет активных ключей</div><div class="modal-btn" id="createApiKeyBtn">Создать новый ключ</div><div class="modal-btn" style="background:#2a2f3a;" id="closeApiModal">Закрыть</div></div></div>
-    <div id="referralModal" class="modal"><div class="modal-content"><h3>⟡ Реферальная ссылка</h3><div class="code-display" id="refLinkDisplay">...</div><div class="modal-btn" id="copyRefBtn">Копировать</div><div class="modal-btn" style="background:#2a2f3a;" id="closeRefModal">Закрыть</div></div></div>
-    <div id="limitsModal" class="modal"><div class="modal-content"><h3>⚖ Ваши лимиты</h3><p>Суточный: 5,000 USD<br>Месячный: 50,000 USD</p><div class="modal-btn" id="closeLimitsModal">OK</div></div></div>
-    <div id="loginHistoryModal" class="modal"><div class="modal-content"><h3>⌛ История входов</h3><p>13.06.2026 14:32 • Telegram Web<br>12.06.2026 09:15 • iPhone</p><div class="modal-btn" id="closeHistoryModal">Закрыть</div></div></div>
-    <div id="notifSettingsModal" class="modal"><div class="modal-content"><h3>⌔ Уведомления</h3><p>✅ P2P сделки<br>✅ Пополнения/выводы</p><div class="modal-btn" id="closeNotifModal">Сохранить</div></div></div>
+    <div id="twofaModal" class="modal"><div class="modal-content"><h3>⌘ Включить 2FA</h3><p style="font-size:0.8rem; margin-bottom:8px;">Код из Google Authenticator</p><input class="modal-input" id="twofaCode" placeholder="6-значный код"><div class="modal-btn" id="enableTwofaBtn">Активировать</div><div class="modal-btn" style="background:#2a2f3a;" id="closeTwofaModal">Отмена</div></div></div>
+    <div id="apiModal" class="modal"><div class="modal-content"><h3>⌨ API-ключи</h3><div id="apiKeysList" style="margin:12px 0; font-size:0.8rem; text-align:left;">Нет активных ключей</div><div class="modal-btn" id="createApiKeyBtn">Создать новый ключ</div><div class="modal-btn" style="background:#2a2f3a;" id="closeApiModal">Закрыть</div></div></div>
+    <div id="referralModal" class="modal"><div class="modal-content"><h3>⟡ Реферальная ссылка</h3><div class="code-display" id="refLinkDisplay">https://t.me/...?start=ref_123</div><div class="modal-btn" id="copyRefBtn">Копировать</div><div class="modal-btn" style="background:#2a2f3a;" id="closeRefModal">Закрыть</div></div></div>
+    <div id="limitsModal" class="modal"><div class="modal-content"><h3>⚖ Ваши лимиты</h3><p style="margin:12px 0;">Суточный: 5,000 USD<br>Месячный: 50,000 USD<br>Повышайте KYC для увеличения</p><div class="modal-btn" id="closeLimitsModal">OK</div></div></div>
+    <div id="loginHistoryModal" class="modal"><div class="modal-content"><h3>⌛ История входов</h3><p style="margin:12px 0;">13.06.2026 14:32 • Telegram Web<br>12.06.2026 09:15 • iPhone 15<br>10.06.2026 22:01 • Windows PC</p><div class="modal-btn" id="closeHistoryModal">Закрыть</div></div></div>
+    <div id="notifSettingsModal" class="modal"><div class="modal-content"><h3>⌔ Уведомления</h3><p style="margin:12px 0;">✅ P2P сделки<br>✅ Пополнения/выводы<br>❌ Маркетинговые рассылки</p><div class="modal-btn" id="closeNotifModal">Сохранить</div></div></div>
     <div id="langModal" class="modal"><div class="modal-content"><h3>⌨ Язык и валюта</h3><select class="modal-input" id="langSelect"><option>Русский</option><option>English</option></select><select class="modal-input" id="currencySelect"><option>USD</option><option>RUB</option><option>EUR</option></select><div class="modal-btn" id="saveLangBtn">Сохранить</div><div class="modal-btn" style="background:#2a2f3a;" id="closeLangModal">Отмена</div></div></div>
-    <div id="createChequeModal" class="modal"><div class="modal-content"><h3>✧ Создать чек</h3><select id="chequeCurrency" class="modal-input"><option value="USDT">USDT</option><option value="BTC">BTC</option><option value="ETH">ETH</option><option value="TON">TON</option></select><input type="number" id="chequeAmount" class="modal-input" placeholder="Сумма"><div id="chequeResult"></div><div class="modal-btn" id="generateChequeBtn">Создать чек</div><div class="modal-btn" style="background:#2a2f3a;" id="closeChequeModal">Отмена</div></div></div>
+
+    <!-- Модалки чеков -->
+    <div id="createChequeModal" class="modal"><div class="modal-content"><h3>✧ Создать чек</h3><select id="chequeCurrency" class="modal-input"><option value="USDT">USDT</option><option value="BTC">BTC</option><option value="ETH">ETH</option><option value="TON">TON</option></select><input type="number" id="chequeAmount" class="modal-input" placeholder="Сумма"><div id="chequeResult" style="font-size:0.8rem;"></div><div class="modal-btn" id="generateChequeBtn">Создать чек</div><div class="modal-btn" style="background:#2a2f3a;" id="closeChequeModal">Отмена</div></div></div>
     <div id="redeemChequeModal" class="modal"><div class="modal-content"><h3>⌾ Активировать чек</h3><input type="text" id="chequeCode" class="modal-input" placeholder="Код чека"><div class="modal-btn" id="redeemChequeConfirm">Активировать</div><div class="modal-btn" style="background:#2a2f3a;" id="closeRedeemModal">Отмена</div></div></div>
 
     <div class="bottom-nav">
@@ -374,38 +393,26 @@
         tg.expand();
         tg.enableClosingConfirmation();
 
-        function showToast(msg) {
-            const t = document.getElementById('toastMsg');
-            t.innerText = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2000);
-        }
-
-        // Печатающийся текст
+        function showToast(msg) { const t=document.getElementById('toastMsg'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
         const fullText = "V&M Bank - цифровой крипто-банк, анонимностью и шифрование это про нас.";
         let typewriterInterval = null;
         function startTypewriter() {
             const el = document.getElementById('typewriterText');
-            if (!el) return;
-            if (typewriterInterval) clearInterval(typewriterInterval);
+            if(!el) return;
+            if(typewriterInterval) clearInterval(typewriterInterval);
             el.innerHTML = '';
             const cursorSpan = document.createElement('span');
             cursorSpan.className = 'cursor';
             el.appendChild(cursorSpan);
             let idx = 0;
             typewriterInterval = setInterval(() => {
-                if (idx < fullText.length) {
+                if(idx < fullText.length) {
                     const textNode = document.createTextNode(fullText[idx]);
                     el.insertBefore(textNode, cursorSpan);
                     idx++;
-                } else {
-                    clearInterval(typewriterInterval);
-                    typewriterInterval = null;
-                }
+                } else { clearInterval(typewriterInterval); typewriterInterval = null; }
             }, 55);
         }
-
-        // Карусель
         const slidesData = [
             { pair: "BTC / USD", rate: "68,420", change: "+3.1%", symbol: "⌘" },
             { pair: "ETH / USD", rate: "3,890", change: "+5.2%", symbol: "⚲" },
@@ -422,7 +429,7 @@
         function buildCarousel() {
             const track = document.getElementById('carouselTrack');
             const dots = document.getElementById('carouselDots');
-            if (!track) return;
+            if(!track) return;
             track.innerHTML = '';
             slidesData.forEach(item => {
                 const slide = document.createElement('div');
@@ -431,242 +438,92 @@
                 track.appendChild(slide);
             });
             dots.innerHTML = '';
-            slidesData.forEach((_, idx) => {
+            slidesData.forEach((_,idx) => {
                 const dot = document.createElement('div');
                 dot.className = 'dot';
-                if (idx === currentSlide) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(idx));
+                if(idx===currentSlide) dot.classList.add('active');
+                dot.addEventListener('click',()=>goToSlide(idx));
                 dots.appendChild(dot);
             });
             updateCarousel();
         }
-        function updateCarousel() {
-            document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
-            document.querySelectorAll('.dot').forEach((d, i) => {
-                if (i === currentSlide) d.classList.add('active');
-                else d.classList.remove('active');
-            });
-        }
-        function goToSlide(idx) {
-            currentSlide = idx;
-            updateCarousel();
-            resetAutoSlide();
-        }
-        function nextSlide() { goToSlide((currentSlide + 1) % slidesData.length); }
-        function resetAutoSlide() {
-            if (autoInterval) clearInterval(autoInterval);
-            autoInterval = setInterval(nextSlide, 2000);
-        }
-
-        // Новости
-        const newsData = [
-            "Биткоин обновил локальный максимум на фоне одобрения ETF опционов",
-            "Telegram запускает внутренний обменник Stars на TON с нулевой комиссией",
-            "SEC одобрила торги крипто-деривативами на Nasdaq",
-            "Крупнейший банк Японии внедряет стейблкоин для международных расчётов",
-            "TON входит в топ-5 по объёму DeFi после интеграции с Telegram Wallet",
-            "ЕЦБ представил цифровое евро — пилотный запуск в 2027 году",
-            "Binance и OKX лидируют по объёму P2P-торгов в странах СНГ",
-            "Россия легализовала майнинг с особыми налоговыми режимами",
-            "Solana обгоняет Ethereum по количеству активных адресов",
-            "Новый мемкоин 'TrumpCoin' вырос на 500% за сутки",
-            "Криптобиржа Bybit получила лицензию в Дубае",
-            "Tether выпустил стейблкоин, обеспеченный золотом",
-            "Visa запускает карту с кешбэком в USDT для Европы",
-            "Хакеры вывели $200M из кросс-чейн моста, уязвимость исправлена",
-            "Илон Маск заявил о возможной интеграции DOGE в X Payments"
-        ];
-        function renderNews() {
-            const container = document.getElementById('newsContainer');
-            if (!container) return;
-            container.innerHTML = newsData.map((title, idx) => `
-                <div class="news-item">
-                    <div class="news-title">${idx + 1}. ${title}</div>
-                    <div class="news-meta">
-                        <span>⌛ 13 июня 2026  •  CryptoFeed</span>
-                        <button class="read-btn" data-idx="${idx}">Читать</button>
-                    </div>
-                </div>
-            `).join('');
-            document.querySelectorAll('.read-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const idx = e.target.getAttribute('data-idx');
-                    showToast(`Читать: ${newsData[idx].substring(0, 60)}...`);
-                });
-            });
-        }
-
-        // P2P
-        const cryptoList = ["BTC", "ETH", "USDT", "TON", "BNB", "XRP", "ADA", "SOL", "DOGE", "DOT"];
+        function updateCarousel() { document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide*100}%)`; document.querySelectorAll('.dot').forEach((d,i)=>{ if(i===currentSlide) d.classList.add('active'); else d.classList.remove('active'); }); }
+        function goToSlide(idx) { currentSlide = idx; updateCarousel(); resetAutoSlide(); }
+        function nextSlide() { goToSlide((currentSlide+1)%slidesData.length); }
+        function resetAutoSlide() { if(autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide,2000); }
+        const newsData = ["Биткоин обновил локальный максимум на фоне одобрения ETF опционов","Telegram запускает внутренний обменник Stars на TON с нулевой комиссией","SEC одобрила торги крипто-деривативами на Nasdaq","Крупнейший банк Японии внедряет стейблкоин","TON входит в топ-5 DeFi","ЕЦБ представил цифровое евро","Binance и OKX лидируют по P2P","Россия легализовала майнинг","Solana обгоняет Ethereum","Новый мемкоин 'TrumpCoin' вырос на 500%","Bybit получил лицензию в Дубае","Tether выпустил стейблкоин под золото","Visa запускает кешбэк в USDT","Хакеры вывели $200M","Илон Маск про DOGE"];
+        function renderNews() { const container = document.getElementById('newsContainer'); if(!container) return; container.innerHTML = newsData.map((title,idx)=>`<div class="news-item"><div class="news-title">${idx+1}. ${title}</div><div class="news-meta"><span>⌛ 13 июня 2026  •  CryptoFeed</span><button class="read-btn" data-idx="${idx}">Читать</button></div></div>`).join(''); document.querySelectorAll('.read-btn').forEach(btn=>btn.addEventListener('click',(e)=>showToast(`Читать: ${newsData[e.target.getAttribute('data-idx')].substring(0,60)}...`))); }
+        const cryptoList = ["BTC","ETH","USDT","TON","BNB","XRP","ADA","SOL","DOGE","DOT"];
         let currentP2PMode = 'buy';
-        function renderCryptoSlide() {
-            const grid = document.getElementById('cryptoGridContainer');
-            if (!grid) return;
-            grid.innerHTML = cryptoList.map(sym => `<div class="crypto-card" data-crypto="${sym}"><div>${sym}</div></div>`).join('');
-            document.querySelectorAll('#cryptoGridContainer .crypto-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    showToast(`Выбрана валюта ${card.getAttribute('data-crypto')} для ${currentP2PMode === 'buy' ? 'покупки' : 'продажи'}`);
-                    document.getElementById('cryptoSlidePanel').classList.remove('open');
-                    renderP2POrders(currentP2PMode);
-                });
-            });
-        }
-        function renderP2POrders(mode) {
-            const container = document.getElementById('p2pOrdersContainer');
-            if (!container) return;
-            if (mode === 'buy') {
-                container.innerHTML = `<div style="margin-bottom:8px;">⟡ Предложения покупки USDT ⟡</div>
-                <div class="order-item"><div class="order-header"><span class="buy-color">Покупка USDT</span><span>92.50 ₽</span></div><div>Лимит: 500–5000 ₽ | СБП</div><div>Продавец: @crypto_trader</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>
-                <div class="order-item"><div class="order-header"><span class="buy-color">Покупка USDT</span><span>92.80 ₽</span></div><div>Лимит: 200–12000 ₽ | Т-Банк</div><div>Продавец: @usdt_exchange</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>
-                <div class="order-item"><div class="order-header"><span class="buy-color">Покупка USDT</span><span>93.10 ₽</span></div><div>Лимит: 100–3000 ₽ | QIWI</div><div>Продавец: @fast_deal</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>`;
-            } else {
-                container.innerHTML = `<div style="margin-bottom:8px;">⟡ Предложения продажи USDT ⟡</div>
-                <div class="order-item"><div class="order-header"><span class="sell-color">Продажа USDT</span><span>94.20 ₽</span></div><div>Лимит: 500–8000 ₽ | СБП</div><div>Покупатель: @big_whale</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>
-                <div class="order-item"><div class="order-header"><span class="sell-color">Продажа USDT</span><span>94.45 ₽</span></div><div>Лимит: 200–4000 ₽ | ЮMoney</div><div>Покупатель: @crypto_p2p</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>
-                <div class="order-item"><div class="order-header"><span class="sell-color">Продажа USDT</span><span>93.95 ₽</span></div><div>Лимит: 1000–20000 ₽ | Т-Банк</div><div>Покупатель: @instant_exchange</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>`;
-            }
-        }
-
-        // Кошелёк и чеки
+        function renderCryptoSlide() { const grid = document.getElementById('cryptoGridContainer'); if(!grid) return; grid.innerHTML = cryptoList.map(sym=>`<div class="crypto-card" data-crypto="${sym}"><div>${sym}</div></div>`).join(''); document.querySelectorAll('#cryptoGridContainer .crypto-card').forEach(card=>card.addEventListener('click',()=>{ showToast(`Выбрана валюта ${card.getAttribute('data-crypto')} для ${currentP2PMode==='buy'?'покупки':'продажи'}`); document.getElementById('cryptoSlidePanel').classList.remove('open'); renderP2POrders(currentP2PMode); })); }
+        function renderP2POrders(mode) { const container = document.getElementById('p2pOrdersContainer'); if(!container) return; if(mode==='buy') container.innerHTML = `<div style="margin-bottom:8px;">⟡ Предложения покупки USDT ⟡</div><div class="order-item"><div class="order-header"><span class="buy-color">Покупка USDT</span><span>92.50 ₽</span></div><div>Лимит: 500–5000 ₽ | СБП</div><div>Продавец: @crypto_trader</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div><div class="order-item"><div class="order-header"><span class="buy-color">Покупка USDT</span><span>92.80 ₽</span></div><div>Лимит: 200–12000 ₽ | Т-Банк</div><div>Продавец: @usdt_exchange</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div><div class="order-item"><div class="order-header"><span class="buy-color">Покупка USDT</span><span>93.10 ₽</span></div><div>Лимит: 100–3000 ₽ | QIWI</div><div>Продавец: @fast_deal</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>`; else container.innerHTML = `<div style="margin-bottom:8px;">⟡ Предложения продажи USDT ⟡</div><div class="order-item"><div class="order-header"><span class="sell-color">Продажа USDT</span><span>94.20 ₽</span></div><div>Лимит: 500–8000 ₽ | СБП</div><div>Покупатель: @big_whale</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div><div class="order-item"><div class="order-header"><span class="sell-color">Продажа USDT</span><span>94.45 ₽</span></div><div>Лимит: 200–4000 ₽ | ЮMoney</div><div>Покупатель: @crypto_p2p</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div><div class="order-item"><div class="order-header"><span class="sell-color">Продажа USDT</span><span>93.95 ₽</span></div><div>Лимит: 1000–20000 ₽ | Т-Банк</div><div>Покупатель: @instant_exchange</div><div class="pill-button" style="margin-top:8px; padding:6px;" onclick="showToast('Сделка в разработке')">Торговать</div></div>`; }
         let userBalances = { USD: 1250, BTC: 0.0234, ETH: 0.315, USDT: 850, TON: 125, BNB: 2.1, XRP: 450, ADA: 1200, SOL: 4.3, DOGE: 3500 };
-        const priceMap = { BTC: 68420, ETH: 3890, USDT: 1, TON: 5.2, BNB: 580, XRP: 0.62, ADA: 0.45, SOL: 145, DOGE: 0.12 };
+        const priceMap = { BTC:68420, ETH:3890, USDT:1, TON:5.2, BNB:580, XRP:0.62, ADA:0.45, SOL:145, DOGE:0.12 };
         let storedCheques = [];
         function updateWalletUI() {
-            const container = document.getElementById('currencyList');
-            if (!container) return;
-            let totalUSD = userBalances.USD;
-            const wallets = ['BTC', 'ETH', 'USDT', 'TON', 'BNB', 'XRP', 'ADA', 'SOL', 'DOGE'];
+            const container = document.getElementById('currencyList'); if(!container) return;
+            let totalUSD = userBalances.USD; const wallets = ['BTC','ETH','USDT','TON','BNB','XRP','ADA','SOL','DOGE'];
             container.innerHTML = '';
-            for (let cur of wallets) {
-                let bal = userBalances[cur] || 0;
-                let usdVal = bal * (priceMap[cur] || 0);
-                totalUSD += usdVal;
-                container.innerHTML += `<div class="currency-item"><span>${cur}</span><span>${bal.toFixed(4)} ≈ $${usdVal.toFixed(2)}</span></div>`;
-            }
+            for(let cur of wallets) { let bal = userBalances[cur]||0; let usdVal = bal*(priceMap[cur]||0); totalUSD += usdVal; container.innerHTML += `<div class="currency-item"><span>${cur}</span><span>${bal.toFixed(4)} ≈ $${usdVal.toFixed(2)}</span></div>`; }
             document.getElementById('totalBalance').innerText = `${totalUSD.toFixed(2)} USD`;
-            const user = tg.initDataUnsafe?.user;
-            document.getElementById('userNameDisplay').innerText = user?.username || user?.first_name || 'Гость';
+            const user = tg.initDataUnsafe?.user; document.getElementById('userNameDisplay').innerText = user?.username || user?.first_name || 'Гость';
         }
-        function generateChequeCode() { return 'VMB' + Date.now().toString(36) + Math.random().toString(36).substr(2, 6).toUpperCase(); }
-        function createCheque(currency, amount) {
-            if (amount <= 0 || userBalances[currency] < amount) return null;
-            userBalances[currency] -= amount;
-            const code = generateChequeCode();
-            storedCheques.push({ code, currency, amount });
-            updateWalletUI();
-            return code;
+        function generateChequeCode() { return 'VMB' + Date.now().toString(36) + Math.random().toString(36).substr(2,6).toUpperCase(); }
+        function createCheque(currency, amount) { if(amount<=0 || userBalances[currency]<amount) return null; userBalances[currency]-=amount; const code = generateChequeCode(); storedCheques.push({code,currency,amount}); updateWalletUI(); return code; }
+        function redeemCheque(code) { const idx = storedCheques.findIndex(c=>c.code===code); if(idx===-1) return false; const c = storedCheques[idx]; userBalances[c.currency] += c.amount; storedCheques.splice(idx,1); updateWalletUI(); return true; }
+        let kycStatus = false, twofaEnabled = false, apiKeys = [], referralCode = "REF" + Math.random().toString(36).substr(2,8);
+        function updateProfileUI() { document.getElementById('kycStatus').innerText = kycStatus ? "Верифицирован" : "Не пройден"; document.getElementById('twofaStatus').innerText = twofaEnabled ? "Вкл" : "Выкл"; }
+        const kycModal = document.getElementById('kycModal');
+        const twofaModal = document.getElementById('twofaModal');
+        const apiModal = document.getElementById('apiModal');
+        const referralModal = document.getElementById('referralModal');
+        const limitsModal = document.getElementById('limitsModal');
+        const loginHistoryModal = document.getElementById('loginHistoryModal');
+        const notifModal = document.getElementById('notifSettingsModal');
+        const langModal = document.getElementById('langModal');
+        if(kycModal && twofaModal) {
+            document.getElementById('kycStatusItem').onclick = () => kycModal.style.display='flex';
+            document.getElementById('twofaItem').onclick = () => twofaModal.style.display='flex';
+            document.getElementById('apiKeysItem').onclick = () => { document.getElementById('apiKeysList').innerHTML = apiKeys.length ? apiKeys.map(k=>`<div>• ${k}</div>`).join('') : 'Нет ключей'; apiModal.style.display='flex'; };
+            document.getElementById('referralItem').onclick = () => { document.getElementById('refLinkDisplay').innerText = `https://t.me/${tg.initDataUnsafe?.user?.username || 'vmbank'}?start=${referralCode}`; referralModal.style.display='flex'; };
+            document.getElementById('limitsItem').onclick = () => limitsModal.style.display='flex';
+            document.getElementById('loginHistoryItem').onclick = () => loginHistoryModal.style.display='flex';
+            document.getElementById('notificationsSettingsItem').onclick = () => notifModal.style.display='flex';
+            document.getElementById('languageItem').onclick = () => langModal.style.display='flex';
+            document.getElementById('logoutItem').onclick = () => tg.close();
+            const closeBtns = ['closeKycModal','closeTwofaModal','closeApiModal','closeRefModal','closeLimitsModal','closeHistoryModal','closeNotifModal','closeLangModal'];
+            closeBtns.forEach(id => { const btn = document.getElementById(id); if(btn) btn.onclick = () => btn.closest('.modal').style.display='none'; });
+            document.getElementById('submitKycBtn').onclick = () => { kycStatus = true; updateProfileUI(); kycModal.style.display='none'; showToast('KYC заявка отправлена'); };
+            document.getElementById('enableTwofaBtn').onclick = () => { const code = document.getElementById('twofaCode').value; if(code==='123456') { twofaEnabled=true; updateProfileUI(); twofaModal.style.display='none'; showToast('2FA активирована'); } else showToast('Неверный код (демо: 123456)'); };
+            document.getElementById('createApiKeyBtn').onclick = () => { const newKey = 'API_'+Math.random().toString(36).substr(2,12).toUpperCase(); apiKeys.push(newKey); document.getElementById('apiKeysList').innerHTML = apiKeys.map(k=>`<div>• ${k}</div>`).join(''); showToast('API-ключ создан'); };
+            document.getElementById('copyRefBtn').onclick = () => { navigator.clipboard.writeText(document.getElementById('refLinkDisplay').innerText); showToast('Ссылка скопирована'); };
+            document.getElementById('saveLangBtn').onclick = () => { showToast('Язык и валюта сохранены'); langModal.style.display='none'; };
         }
-        function redeemCheque(code) {
-            const idx = storedCheques.findIndex(c => c.code === code);
-            if (idx === -1) return false;
-            const c = storedCheques[idx];
-            userBalances[c.currency] += c.amount;
-            storedCheques.splice(idx, 1);
-            updateWalletUI();
-            return true;
-        }
-
-        // Профиль
-        let kycStatus = false, twofaEnabled = false, apiKeys = [], referralCode = "REF" + Math.random().toString(36).substr(2, 8);
-        function updateProfileUI() {
-            document.getElementById('kycStatus').innerText = kycStatus ? "Верифицирован" : "Не пройден";
-            document.getElementById('twofaStatus').innerText = twofaEnabled ? "Вкл" : "Выкл";
-        }
-        // Обработчики модалок (упрощённо)
-        document.getElementById('kycStatusItem').onclick = () => document.getElementById('kycModal').style.display = 'flex';
-        document.getElementById('twofaItem').onclick = () => document.getElementById('twofaModal').style.display = 'flex';
-        document.getElementById('apiKeysItem').onclick = () => { document.getElementById('apiKeysList').innerHTML = apiKeys.length ? apiKeys.map(k => `<div>• ${k}</div>`).join('') : 'Нет ключей'; document.getElementById('apiModal').style.display = 'flex'; };
-        document.getElementById('referralItem').onclick = () => { document.getElementById('refLinkDisplay').innerText = `https://t.me/${tg.initDataUnsafe?.user?.username || 'vmbank'}?start=${referralCode}`; document.getElementById('referralModal').style.display = 'flex'; };
-        document.getElementById('limitsItem').onclick = () => document.getElementById('limitsModal').style.display = 'flex';
-        document.getElementById('loginHistoryItem').onclick = () => document.getElementById('loginHistoryModal').style.display = 'flex';
-        document.getElementById('notificationsSettingsItem').onclick = () => document.getElementById('notifSettingsModal').style.display = 'flex';
-        document.getElementById('languageItem').onclick = () => document.getElementById('langModal').style.display = 'flex';
-        document.getElementById('logoutItem').onclick = () => tg.close();
-        const closeBtns = ['closeKycModal', 'closeTwofaModal', 'closeApiModal', 'closeRefModal', 'closeLimitsModal', 'closeHistoryModal', 'closeNotifModal', 'closeLangModal', 'closeChequeModal', 'closeRedeemModal'];
-        closeBtns.forEach(id => { const btn = document.getElementById(id); if (btn) btn.onclick = () => btn.closest('.modal').style.display = 'none'; });
-        document.getElementById('submitKycBtn').onclick = () => { kycStatus = true; updateProfileUI(); document.getElementById('kycModal').style.display = 'none'; showToast('KYC заявка отправлена'); };
-        document.getElementById('enableTwofaBtn').onclick = () => { const code = document.getElementById('twofaCode').value; if (code === '123456') { twofaEnabled = true; updateProfileUI(); document.getElementById('twofaModal').style.display = 'none'; showToast('2FA активирована'); } else showToast('Неверный код (демо: 123456)'); };
-        document.getElementById('createApiKeyBtn').onclick = () => { const newKey = 'API_' + Math.random().toString(36).substr(2, 12).toUpperCase(); apiKeys.push(newKey); document.getElementById('apiKeysList').innerHTML = apiKeys.map(k => `<div>• ${k}</div>`).join(''); showToast('API-ключ создан'); };
-        document.getElementById('copyRefBtn').onclick = () => { navigator.clipboard.writeText(document.getElementById('refLinkDisplay').innerText); showToast('Ссылка скопирована'); };
-        document.getElementById('saveLangBtn').onclick = () => { showToast('Язык и валюта сохранены'); document.getElementById('langModal').style.display = 'none'; };
-        document.getElementById('closeLimitsModal').onclick = () => document.getElementById('limitsModal').style.display = 'none';
-        document.getElementById('closeHistoryModal').onclick = () => document.getElementById('loginHistoryModal').style.display = 'none';
-        document.getElementById('closeNotifModal').onclick = () => document.getElementById('notifSettingsModal').style.display = 'none';
-
-        // График
-        function drawMockChart() {
-            const canvas = document.getElementById('priceChart');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.clientWidth, h = canvas.clientHeight;
-            canvas.width = w; canvas.height = h;
-            ctx.fillStyle = '#0a0c10';
-            ctx.fillRect(0, 0, w, h);
-            for (let i = 0; i < 20; i++) {
-                let x = i * (w / 20);
-                let yHigh = h / 3 + Math.sin(i) * 20;
-                ctx.fillStyle = '#6fcf97';
-                ctx.fillRect(x - 3, yHigh - 5, 6, 10);
-                ctx.beginPath();
-                ctx.moveTo(x, yHigh);
-                ctx.lineTo(x, yHigh - 15);
-                ctx.stroke();
-            }
-        }
-        function generateOrderbook() {
-            let bids = [], asks = [];
-            let base = 9160;
-            for (let i = 1; i <= 5; i++) {
-                bids.push({ price: (base - i * 2).toFixed(2), amount: (Math.random() * 0.5).toFixed(3) });
-                asks.push({ price: (base + i * 2).toFixed(2), amount: (Math.random() * 0.5).toFixed(3) });
-            }
-            return { bids, asks };
-        }
-        function renderOrderbook() {
-            const { bids, asks } = generateOrderbook();
-            document.getElementById('askOrders').innerHTML = asks.map(a => `<div class="orderbook-row"><span>▼</span><span>${a.price}</span><span>${a.amount}</span></div>`).join('');
-            document.getElementById('bidOrders').innerHTML = bids.map(b => `<div class="orderbook-row"><span>▲</span><span>${b.price}</span><span>${b.amount}</span></div>`).join('');
-        }
-
-        // Навигация
-        const pages = ['home', 'chart', 'p2p', 'wallet', 'profile'];
+        function drawMockChart() { const canvas = document.getElementById('priceChart'); if(!canvas) return; const ctx = canvas.getContext('2d'); const w = canvas.clientWidth, h = canvas.clientHeight; canvas.width = w; canvas.height = h; ctx.fillStyle = '#0a0c10'; ctx.fillRect(0,0,w,h); for(let i=0;i<20;i++){ let x = i*(w/20); let yHigh = h/3 + Math.sin(i)*20; ctx.fillStyle = '#6fcf97'; ctx.fillRect(x-3, yHigh-5, 6, 10); ctx.beginPath(); ctx.moveTo(x, yHigh); ctx.lineTo(x, yHigh-15); ctx.stroke(); } }
+        function generateOrderbook() { let bids=[], asks=[]; let base=9160; for(let i=1;i<=5;i++){ bids.push({price:(base-i*2).toFixed(2), amount:(Math.random()*0.5).toFixed(3)}); asks.push({price:(base+i*2).toFixed(2), amount:(Math.random()*0.5).toFixed(3)}); } return {bids,asks}; }
+        function renderOrderbook() { const {bids,asks}=generateOrderbook(); document.getElementById('askOrders').innerHTML = asks.map(a=>`<div class="orderbook-row"><span>▼</span><span>${a.price}</span><span>${a.amount}</span></div>`).join(''); document.getElementById('bidOrders').innerHTML = bids.map(b=>`<div class="orderbook-row"><span>▲</span><span>${b.price}</span><span>${b.amount}</span></div>`).join(''); }
+        const pages = ['home','chart','p2p','wallet','profile'];
         function showPage(pageId) {
-            pages.forEach(p => document.getElementById(p + 'Page').classList.remove('active'));
-            document.getElementById(pageId + 'Page').classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('data-page') === pageId) item.classList.add('active');
-                else item.classList.remove('active');
-            });
-            if (pageId === 'home') { buildCarousel(); resetAutoSlide(); renderNews(); startTypewriter(); }
-            if (pageId === 'chart') { drawMockChart(); renderOrderbook(); }
-            if (pageId === 'wallet') updateWalletUI();
-            if (pageId === 'p2p') renderP2POrders(currentP2PMode);
+            pages.forEach(p=>document.getElementById(p+'Page').classList.remove('active'));
+            document.getElementById(pageId+'Page').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item=>{ if(item.getAttribute('data-page')===pageId) item.classList.add('active'); else item.classList.remove('active'); });
+            if(pageId==='home') { buildCarousel(); resetAutoSlide(); renderNews(); startTypewriter(); }
+            if(pageId==='chart') { drawMockChart(); renderOrderbook(); }
+            if(pageId==='wallet') updateWalletUI();
+            if(pageId==='p2p') renderP2POrders(currentP2PMode);
         }
-
-        document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => showPage(item.getAttribute('data-page'))));
-        document.getElementById('p2pBuyBtn').addEventListener('click', () => { currentP2PMode = 'buy'; document.getElementById('p2pBuyBtn').classList.add('active'); document.getElementById('p2pSellBtn').classList.remove('active'); renderP2POrders('buy'); });
-        document.getElementById('p2pSellBtn').addEventListener('click', () => { currentP2PMode = 'sell'; document.getElementById('p2pSellBtn').classList.add('active'); document.getElementById('p2pBuyBtn').classList.remove('active'); renderP2POrders('sell'); });
-        document.getElementById('showCryptoSliderBtn').addEventListener('click', () => { const p = document.getElementById('cryptoSlidePanel'); p.classList.toggle('open'); if (p.classList.contains('open')) renderCryptoSlide(); });
-        document.getElementById('depositBtnWallet')?.addEventListener('click', () => showToast('Депозит: адрес сгенерирован ✧'));
-        document.getElementById('withdrawBtnWallet')?.addEventListener('click', () => showToast('Вывод в разработке'));
-        document.getElementById('createChequeBtn').onclick = () => document.getElementById('createChequeModal').style.display = 'flex';
-        document.getElementById('redeemChequeBtn').onclick = () => document.getElementById('redeemChequeModal').style.display = 'flex';
-        document.getElementById('generateChequeBtn').onclick = () => {
-            const cur = document.getElementById('chequeCurrency').value;
-            const amt = parseFloat(document.getElementById('chequeAmount').value);
-            const code = createCheque(cur, amt);
-            if (code) {
-                document.getElementById('chequeResult').innerHTML = `<div class="code-display">Код: ${code}</div>`;
-                showToast(`Чек ${code} создан`);
-            } else showToast('Ошибка');
-        };
-        document.getElementById('redeemChequeConfirm').onclick = () => {
-            const code = document.getElementById('chequeCode').value.trim();
-            if (code && redeemCheque(code)) showToast('Чек активирован');
-            else showToast('Неверный код');
-            document.getElementById('redeemChequeModal').style.display = 'none';
-        };
-
+        document.querySelectorAll('.nav-item').forEach(item=>item.addEventListener('click',()=>showPage(item.getAttribute('data-page'))));
+        document.getElementById('p2pBuyBtn').addEventListener('click',()=>{ currentP2PMode='buy'; document.getElementById('p2pBuyBtn').classList.add('active'); document.getElementById('p2pSellBtn').classList.remove('active'); renderP2POrders('buy'); });
+        document.getElementById('p2pSellBtn').addEventListener('click',()=>{ currentP2PMode='sell'; document.getElementById('p2pSellBtn').classList.add('active'); document.getElementById('p2pBuyBtn').classList.remove('active'); renderP2POrders('sell'); });
+        document.getElementById('showCryptoSliderBtn').addEventListener('click',()=>{ const p=document.getElementById('cryptoSlidePanel'); p.classList.toggle('open'); if(p.classList.contains('open')) renderCryptoSlide(); });
+        document.getElementById('depositBtnWallet')?.addEventListener('click',()=>showToast('Депозит: адрес сгенерирован ✧'));
+        document.getElementById('withdrawBtnWallet')?.addEventListener('click',()=>showToast('Вывод в разработке'));
+        document.getElementById('createChequeBtn').onclick=()=>document.getElementById('createChequeModal').style.display='flex';
+        document.getElementById('redeemChequeBtn').onclick=()=>document.getElementById('redeemChequeModal').style.display='flex';
+        document.getElementById('closeChequeModal').onclick=()=>document.getElementById('createChequeModal').style.display='none';
+        document.getElementById('closeRedeemModal').onclick=()=>document.getElementById('redeemChequeModal').style.display='none';
+        document.getElementById('generateChequeBtn').onclick=()=>{ const cur=document.getElementById('chequeCurrency').value; const amt=parseFloat(document.getElementById('chequeAmount').value); const code=createCheque(cur,amt); if(code){ document.getElementById('chequeResult').innerHTML=`<div class="code-display">Код: ${code}</div>`; showToast(`Чек ${code} создан`); } else showToast('Ошибка'); };
+        document.getElementById('redeemChequeConfirm').onclick=()=>{ const code=document.getElementById('chequeCode').value.trim(); if(code && redeemCheque(code)) showToast('Чек активирован'); else showToast('Неверный код'); document.getElementById('redeemChequeModal').style.display='none'; };
         buildCarousel(); resetAutoSlide(); renderNews(); updateWalletUI(); drawMockChart(); renderOrderbook(); renderP2POrders('buy'); showPage('home'); updateProfileUI();
         tg.ready();
     </script>
